@@ -55,7 +55,9 @@ jobs:
               --display-name "free-a1" \
               --assign-public-ip true 2>&1)
 
-            if echo "$RESULT" | grep -q "PROVISIONING\|\"id\".*ocid"; then
+              echo "RESULT: $RESULT"
+
+            if echo "$RESULT" | grep -q 'PROVISIONING\|"id".*ocid'; then
               echo "SUCCESS in $AD"
               echo "$RESULT"
               exit 0
