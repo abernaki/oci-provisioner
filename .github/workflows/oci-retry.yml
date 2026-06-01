@@ -48,7 +48,7 @@ jobs:
               --availability-domain "$AD" \
               --compartment-id "${{ secrets.OCI_CLI_TENANCY }}" \
               --shape VM.Standard.A1.Flex \
-              --shape-config '{"ocpus":4,"memoryInGBs":4}' \
+              --shape-config '{"ocpus":1,"memoryInGBs":4}' \
               --image-id "ocid1.image.oc1.us-chicago-1.aaaaaaaaqzxgc5f4hbxsoi4mhogsodroy5wgnvxcpuwpt77gt4wl3a3x6m2q" \
               --subnet-id "ocid1.subnet.oc1.us-chicago-1.aaaaaaaa4a6iqjv6wdsspaud4nnck42vhlgl2gkpx773sihln3xsk4e3p7ia" \
               --ssh-authorized-keys-file ~/.ssh/id_rsa.pub \
