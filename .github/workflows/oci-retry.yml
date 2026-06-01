@@ -1,39 +1,4 @@
-name: OCI Instance Retry
-
-on:
-  schedule:
-    - cron: '* * * * *'  # every minute
-  workflow_dispatch:      # manual trigger too
-
-jobs:
-  provision:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Install OCI CLI
-        run: |
-          curl -L https://raw.githubusercontent.com/oracle/oci-cli/master/scripts/install/install.sh | \
-          bash -s -- --accept-all-defaults
-          echo "$HOME/bin" >> $GITHUB_PATH
-          echo "$HOME/lib/oracle-cli/lib/python3.11/site-packages/oci_cli/bin" >> $GITHUB_PATH
-
-      - name: Configure OCI CLI
-        run: |
-          mkdir -p ~/.oci
-          echo "[DEFAULT]
-          user=${{ secrets.OCI_CLI_USER }}
-          fingerprint=${{ secrets.OCI_CLI_FINGERPRINT }}
-          tenancy=${{ secrets.OCI_CLI_TENANCY }}
-          region=${{ secrets.OCI_CLI_REGION }}
-          key_file=~/.oci/key.pem" > ~/.oci/config
-          echo "${{ secrets.OCI_CLI_KEY_CONTENT }}" > ~/.oci/key.pem
-          chmod 600 ~/.oci/key.pem ~/.oci/config
-
-      - name: Write SSH key
-        run: |
-          mkdir -p ~/.ssh
-          echo "${{ secrets.SSH_PUBLIC_KEY }}" > ~/.ssh/id_rsa.pub
-
-      - name: Try all ADs
+- name: Try all ADs
         run: |
           ADS=(
             "dleJ:US-CHICAGO-1-AD-1"
@@ -61,3 +26,6 @@ jobs:
             fi
             echo "No capacity in $AD"
           done
+
+          echo "No capacity found this run — will retry next minute"
+          exit 0
