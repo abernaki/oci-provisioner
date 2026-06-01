@@ -35,6 +35,7 @@ jobs:
 
       - name: Try all ADs
         run: |
+          set +e
           ADS=(
             "dleJ:US-CHICAGO-1-AD-1"
             "dleJ:US-CHICAGO-1-AD-2"
