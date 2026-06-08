@@ -63,6 +63,7 @@ jobs:
               exit 0
             fi
             echo "No capacity in $AD"
+            sleep 30
           done
 
           echo "No capacity found this run — will retry next minute"
